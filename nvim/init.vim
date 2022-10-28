@@ -1,9 +1,6 @@
 " Plugin section
 call plug#begin("~/.vim/plugged")
     " Themes
-    Plug 'sonph/onehalf', { 'rtp': 'vim' }
-    Plug 'wojciechkepka/vim-github-dark'
-    Plug 'projekt0n/github-nvim-theme'
     Plug 'preservim/nerdtree'
     Plug 'decaycs/decay.nvim', { 'as': 'decay' }
 
@@ -11,18 +8,20 @@ call plug#begin("~/.vim/plugged")
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
 
-    " Javascript
-    Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-    let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier']
+    " Csharp
+    Plug 'OmniSharp/omnisharp-vim'
+    Plug 'dense-analysis/ale'
 
-    " TSX && JSX syntax
-    Plug 'yuezk/vim-js'
-    Plug 'HerringtonDarkholme/yats.vim'
-    Plug 'maxmellon/vim-jsx-pretty'
-
-    " Golang
-    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+    " COC
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
+
+let g:OmniSharp_server_stdio = 1
+let g:OmniSharp_server_use_mono = 1
+let g:OmniSharp_server_use_net6 = 1
+let g:ale_linters = {
+\ 'cs': ['OmniSharp']
+\}
 
 set number
 set relativenumber
@@ -31,6 +30,7 @@ set expandtab
 set shiftwidth=2
 set autoindent
 
+filetype indent plugin on
 syntax enable
 set t_Co=256
 set cursorline
@@ -41,15 +41,17 @@ colorscheme dark-decay
 " Mappings
 nnoremap <silent>ff :Files<CR>
 
-" Enter to accept coc
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
 " NerdTree configuration
 nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
+
+" Move in insert mode
+inoremap <c-k> <up>
+inoremap <c-j> <down>
+inoremap <c-h> <left>
+inoremap <c-l> <right>
+
+" Coc
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<c-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+

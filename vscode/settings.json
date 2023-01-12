@@ -1,0 +1,11 @@
+{
+    "workbench.colorTheme": "GitHub Light",
+    "workbench.productIconTheme": "fluent-icons",
+    "editor.minimap.enabled": false,
+    "workbench.startupEditor": "none",
+    "editor.fontFamily": "Cascadia (Code|Mono) PL",
+    "editor.fontSize": 17,
+    "editor.fontWeight": "600",
+    "editor.fontLigatures": "'calt', 'ss01'",
+    "editor.renderWhitespace": "all",
+}
